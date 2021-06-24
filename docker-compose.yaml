@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+    postgres-db:
+        image: postgres:11.0-alpine
+        environment:
+            POSTGRES_USER: unicorn_user
+            POSTGRES_PASSWORD: magical_password
+            POSTGRES_DB: postgres
+        ports:
+            - "127.0.0.1:8001:5432"
+    fastapi:
+        image: fastapi-service:latest
+        build: .
+        ports:
+            - "127.0.0.1:5000:80"
+        depends_on: 
+            - postgres-db
+    
